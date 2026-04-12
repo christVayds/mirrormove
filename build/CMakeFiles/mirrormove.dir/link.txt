@@ -1,0 +1,1 @@
+/usr/bin/cc -g -fsanitize=address -lm -Wl,--dependency-file=CMakeFiles/mirrormove.dir/link.d CMakeFiles/mirrormove.dir/src/main.c.o CMakeFiles/mirrormove.dir/src/entity.c.o CMakeFiles/mirrormove.dir/src/map.c.o CMakeFiles/mirrormove.dir/src/scene.c.o -o mirrormove  /usr/lib/libraylib.so -L/usr/lib -lraylib

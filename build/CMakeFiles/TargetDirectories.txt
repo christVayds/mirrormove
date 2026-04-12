@@ -1,0 +1,3 @@
+/home/christian/Projects/MirrorMove/build/CMakeFiles/mirrormove.dir
+/home/christian/Projects/MirrorMove/build/CMakeFiles/edit_cache.dir
+/home/christian/Projects/MirrorMove/build/CMakeFiles/rebuild_cache.dir
