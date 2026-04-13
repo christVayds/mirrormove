@@ -10,7 +10,7 @@
 
 // MAP 
 #define MAPSIZE 7 // 15x15 size of the map
-#define MAPCOUNT 2
+#define MAPCOUNT 10
 
 // TILES 
 #define TILESIZE 32

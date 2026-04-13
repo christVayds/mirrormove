@@ -75,23 +75,23 @@ bool MapInit(MapTile *mapTile, uint32_t *Map){
           tile.tileType = TILE_PUSHRIGHT;
           tile.textureRec = (Rectangle){96, 96, TILESIZE, TILESIZE};
           break;
-        case 14:
+        case 14:  // teleport b
           tile.tileType = TILE_TELEPORTA;
           tile.textureRec = (Rectangle){96, 64, TILESIZE, TILESIZE};
           break;
-        case 15:
+        case 15:  // teleport b 
           tile.tileType = TILE_TELEPORTB;
           tile.textureRec = (Rectangle){128, 64, TILESIZE, TILESIZE};
           break;
-        case 16:
+        case 16:  // switch 
           tile.tileType = TILE_SWITCH;
           tile.textureRec = (Rectangle){192, 96, TILESIZE, TILESIZE};
           break;
-        case 17:
+        case 17: // shield 
           tile.tileType = TILE_SHEILD;
           tile.textureRec = (Rectangle){160, 64, TILESIZE, TILESIZE};
           break;
-        case 18:
+        case 18:  // remove shield 
           tile.tileType = TILE_REMOVESHEILD;
           tile.textureRec = (Rectangle){192, 64, TILESIZE, TILESIZE};
           break;
