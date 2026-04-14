@@ -7,6 +7,12 @@
 #include "map.h"
 #include "scene.h"
 
+//#include <emscripten/emscripten.h>
+
+static Scene scene = {0};
+
+void UpdateGame(void);
+
 int main(){
   // INITIALIZE WINDOW
   InitWindow(SCREENWIDTH, SCREENHEIGHT, "Mirror Move");
@@ -133,42 +139,26 @@ int main(){
   };
 
   // SCENE 
-  Scene scene = {
-    .sceneType = SCENE_MAINMENU,
-    .entity1 = &entity1,
-    .entity2 = &entity2,
-    .listMaps = &listMaps,
-    .texture = &texture,
-    .font = &pixelFont,
-    .level = 0,
-    .maxLevel = MAPCOUNT,
-    .running = true
-  };
+  scene.sceneType = SCENE_MAINMENU;
+  scene.entity1 = &entity1;
+  scene.entity2 = &entity2;
+  scene.listMaps = &listMaps;
+  scene.texture = &texture;
+  scene.font = &pixelFont;
+  scene.level = 0;
+  scene.maxLevel = MAPCOUNT;
+  scene.running = true;
 
   // START THE GAME LOOP
   SetTargetFPS(MAXFPS);
-  while(!WindowShouldClose()){
-    // UPDATE 
-    //const float dt = GetFrameTime();
-
-    SceneUpdate(&scene);
-
-    if(!scene.running) break;
-
-    // DRAWING
-    BeginDrawing();
-      // clear backgound
-      ClearBackground(BACKGROUND_COLOR);
-
-      // DRAW
-      SceneDraw(&scene);
-
-      // DEBUGGING
-      //DrawFPS(10, 10);
-      
-      // DRAW HERE
-    EndDrawing();
+  while(!WindowShouldClose()){ 
+    // UPDATE GAME
+    UpdateGame(); 
+    if(!scene.running) break; 
   }
+
+  // browser
+  //emscripten_set_main_loop(UpdateGame, 0, 1);
 
   UnloadTexture(texture);
   UnloadFont(pixelFont);
@@ -176,4 +166,25 @@ int main(){
   CloseAudioDevice();
   CloseWindow();
   return 0;
+}
+
+void UpdateGame(void){
+  // UPDATE 
+  //const float dt = GetFrameTime();
+
+  SceneUpdate(&scene); 
+
+  // DRAWING
+  BeginDrawing();
+    // clear backgound
+    ClearBackground(BACKGROUND_COLOR);
+
+    // DRAW
+    SceneDraw(&scene);
+
+    // DEBUGGING
+    //DrawFPS(SCREENWIDTH - 100, 10);
+      
+    // DRAW HERE
+  EndDrawing();
 }

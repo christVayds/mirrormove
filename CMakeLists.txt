@@ -17,15 +17,15 @@ include_directories(
 
 set(SOURCES
   src/main.c
-  src/entity.c 
-  src/map.c 
+  src/entity.c
+  src/map.c
   src/scene.c
 )
 
 # Add executable using main.c and the generated lexer.c
 add_executable(mirrormove  ${SOURCES})
 
-target_compile_options(mirrormove 
+target_compile_options(mirrormove
     PRIVATE
         -Wall
         -Wextra
@@ -43,3 +43,16 @@ target_link_options(mirrormove
 target_link_libraries(mirrormove
   PRIVATE raylib
 )
+
+# Web-specific flags
+if(EMSCRIPTEN)
+    set_target_properties(mirrormove PROPERTIES SUFFIX ".html")
+
+    target_link_options(mirrormove PRIVATE
+        "--shell-file" "${CMAKE_SOURCE_DIR}/resources/html/shell.html"
+        "-sUSE_GLFW=3"
+        "-sASYNCIFY"
+        "-sALLOW_MEMORY_GROWTH=1"
+        "--preload-file" "${CMAKE_SOURCE_DIR}/resources@/resources"
+    )
+endif()
