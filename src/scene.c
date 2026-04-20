@@ -18,6 +18,13 @@ static void ResetLevel(Scene *scene){
 
   scene->entity2->rec.x = scene->listMaps->mapTiles[scene->level]->posEntity2.x;
   scene->entity2->rec.y = scene->listMaps->mapTiles[scene->level]->posEntity2.y;
+  
+  Vector2 gridOrigin = (Vector2){(SCREENWIDTH - (MAPSIZE * TILESIZE)) / 2, (SCREENHEIGHT - (MAPSIZE * TILESIZE)) / 2};
+  scene->entity1->targetPosition.x = (int32_t)((scene->entity1->rec.x - gridOrigin.x) / TILESIZE);
+  scene->entity1->targetPosition.y = (int32_t)((scene->entity1->rec.y - gridOrigin.y) / TILESIZE);
+
+  scene->entity2->targetPosition.x = (int32_t)((scene->entity2->rec.x - gridOrigin.x) / TILESIZE);
+  scene->entity2->targetPosition.y = (int32_t)((scene->entity2->rec.y - gridOrigin.y) / TILESIZE);
 
   scene->entity1->alive = true;
   scene->entity2->alive = true;
@@ -29,6 +36,7 @@ static void ResetLevel(Scene *scene){
 // GAME PLAY SCENE 
 
 static void UpdateGamePlay(Scene *scene){
+  const float dt = GetFrameTime();
   Vector2 mousepos = GetMousePosition();
   if(IsMouseButtonPressed(0)){
     if(ButtonClicked(mousepos, (Rectangle){10, 10, 64, 64})){ 
@@ -44,12 +52,12 @@ static void UpdateGamePlay(Scene *scene){
   if(!scene->entity1->alive || !scene->entity2->alive) scene->sceneType = SCENE_GAMEOVER;
 
   // UPDATE ENTITY
-  EntityMove(scene->entity1, 1, scene->listMaps->mapTiles[scene->level]);
-  EntityMove(scene->entity2, -1, scene->listMaps->mapTiles[scene->level]); 
+  EntityMove(scene->entity1, 1, scene->listMaps->mapTiles[scene->level], dt);
+  EntityMove(scene->entity2, -1, scene->listMaps->mapTiles[scene->level], dt); 
 
   // TODO: check this
   // check if entities collide 
-  if(EntityCollide(scene->entity1, scene->entity2) && (!scene->entity1->sheildOn && !scene->entity2->sheildOn)){
+  if(EntityCollide(scene->entity1, scene->entity2) && (!scene->entity1->sheildOn && !scene->entity2->sheildOn) && !scene->entity1->isMoving && !scene->entity2->isMoving){
     scene->level++;
     
     // update maps, scene and level 
@@ -252,7 +260,7 @@ static void DrawStartGame(Scene *scene){
   DrawTextEx(*scene->font, "This is you", (Vector2){100, 250}, FONTSIZE, 1.0f, WHITE);
   DrawTextEx(*scene->font, "This is you also\n but opposite", (Vector2){350, 250}, FONTSIZE, 1.0f, WHITE);
 
-  DrawTextEx(*scene->font, "Mission, merge each other.\n\nPress any key to start!", (Vector2){100, 350}, FONTSIZE, 1.0f, WHITE);
+  DrawTextEx(*scene->font, "Mission, merge each other.\nWASD control\n\nPress any key to start!", (Vector2){100, 350}, FONTSIZE, 1.0f, WHITE);
 }
 
 // ABOUT SCENE 

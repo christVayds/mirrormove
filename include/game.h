@@ -10,10 +10,11 @@
 
 // MAP 
 #define MAPSIZE 7 // 15x15 size of the map
-#define MAPCOUNT 10
+#define MAPCOUNT 11
 
 // TILES 
 #define TILESIZE 32
+#define ENTITYSPEED 20.0f
 
 // FONTS 
 #define FONTSIZE 30.0f

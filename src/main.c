@@ -25,6 +25,15 @@ int main(){
   InitAudioDevice();
 
   uint32_t Map[MAPCOUNT][MAPSIZE*MAPSIZE] = {  
+    { // 0 
+      1,8,8,8,8,8,1,
+      1,0,0,0,0,0,1,
+      1,0,0,0,0,0,1,
+      1,0,0,0,0,0,1,
+      1,4,0,0,5,0,1,
+      1,0,0,0,0,0,1,
+      8,8,8,8,8,8,8,
+    },
     { // 1 
       1,8,8,8,8,8,1,
       1,0,0,0,0,0,1,
@@ -92,7 +101,7 @@ int main(){
       7,7,7,7,7,7,7,
       7,0,0,0,0,5,8,
       7,0,0,0,0,12,7,
-      7,0,4,0,0,0,7,
+      7,9,4,0,0,0,7,
       7,0,0,0,0,0,7,
       7,6,6,6,6,6,7,
       7,7,7,7,7,7,7,
@@ -126,16 +135,20 @@ int main(){
   Entity entity1 = {
     .rec = (Rectangle){0, 0, TILESIZE, TILESIZE},
     .textureRec = (Rectangle){0, 0, TILESIZE, TILESIZE},
+    .targetPosition = (Vector2){0, 0},
     .color = RED,
-    .alive = true
+    .alive = true,
+    .isMoving = false
   };
 
   // ENTITY 2
   Entity entity2 = {
     .rec = (Rectangle){0, 0, TILESIZE, TILESIZE},
     .textureRec = (Rectangle){32, 0, TILESIZE, TILESIZE},
+    .targetPosition = (Vector2){0, 0},
     .color = BLUE,
-    .alive = true
+    .alive = true,
+    .isMoving = false
   };
 
   // SCENE 
@@ -150,14 +163,16 @@ int main(){
   scene.running = true;
 
   // START THE GAME LOOP
+  // EXE
   SetTargetFPS(MAXFPS);
+  
   while(!WindowShouldClose()){ 
     // UPDATE GAME
     UpdateGame(); 
     if(!scene.running) break; 
   }
 
-  // browser
+  // BROWSER
   //emscripten_set_main_loop(UpdateGame, 0, 1);
 
   UnloadTexture(texture);
